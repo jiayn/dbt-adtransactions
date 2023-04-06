@@ -1,0 +1,23 @@
+
+version: 2
+
+
+sources:
+  - name: ad_transactions_sources 
+    description: "ad transactions 所依赖的所有底层数据源"
+    schema: oceanus 
+    freshness: # default freshness
+      warn_after: {count: 12, period: hour}
+      error_after: {count: 240, period: day}
+    loaded_at_field: STR_TO_DATE(req_request_time,'%Y-%m-%d %H:%i:%s')
+    tables:
+      - name: dm_eco_dataeco_ad_transations_0_4_1
+        columns:
+          - name: req_request_id
+            description: “各个媒体的请求ID”
+            tests:
+              - not_null
+          - name: req_meidia_source
+            description: “请求所属的媒体”
+            tests:
+              - not_null
