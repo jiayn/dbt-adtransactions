@@ -57,7 +57,7 @@ with back as (
          or sx_product_names is null
          or sx_product_names='NULL'
         then 1 else 0 end as if_jt
-        from {{ source('ad_transactions_sources', 'dm_eco_dataeco_ad_transations_0_4_1') }} 
+        from {{ source('ad_transactions_sources', 'ad_trans_baidu_feb_03071') }} 
         where p_day >=date_format(DATE_SUB(STR_TO_DATE('{{ var("pday") }}', "%Y-%m-%d"), INTERVAL 7 DAY),'%Y-%m-%d')
         and  p_day < date_format(DATE_ADD(STR_TO_DATE('{{ var("pday") }}', "%Y-%m-%d"), INTERVAL 1 DAY),'%Y-%m-%d')
         and ldp_userno is not null
