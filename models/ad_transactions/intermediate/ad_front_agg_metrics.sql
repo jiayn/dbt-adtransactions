@@ -1,5 +1,6 @@
 {{ config(materialized='view') }}
 
+
 with ad_front as (
 
 select    p_day
@@ -36,7 +37,7 @@ select    p_day
     where p_day >=date_format(date_sub(date('{{ var("pday") }}') ,7),'yyyyMMdd')
     and   p_day < date_format(date_add(date('{{ var("pday") }}') ,1),'yyyyMMdd')
     group by 1,2,3,4,5,6
-    )
+    ) ff
     group by 1,2,3,4
 )
 select * from ad_front
