@@ -33,11 +33,10 @@ select    p_day
           , sum(imp_agg_ct) as imp_pv
           , sum(clk_agg_ct) as clk_pv
     from {{ source('ad_transactions_sources', 'ad_trans_baidu_feb_03071') }} 
-    where p_day >=date_format(DATE_SUB(STR_TO_DATE('{{ var("pday") }}', "%Y-%m-%d"), INTERVAL 7 DAY),'%Y-%m-%d')
-    and  p_day < date_format(DATE_ADD(STR_TO_DATE('{{ var("pday") }}', "%Y-%m-%d"), INTERVAL 1 DAY),'%Y-%m-%d')
+    where p_day >=date_format(date_sub(date('{{ var("pday") }}') ,7),'yyyyMMdd')
+    and   p_day < date_format(date_add(date('{{ var("pday") }}') ,1),'yyyyMMdd')
     group by 1,2,3,4,5,6
     )
     group by 1,2,3,4
 )
-
 select * from ad_front
