@@ -64,9 +64,9 @@ with ad_back as (
                 where p_day >= date_format(date_sub(date('{{ var("pday") }}') ,7),'yyyyMMdd')
                 and   p_day < date_format(date_add(date('{{ var("pday") }}') ,1),'yyyyMMdd')
                 and ldp_userno is not null
-            )
+            ) temp_table_1
         where ct = 1 
-    ) temp_table
+    ) temp_table_2
     group by 1,2,3,4
 )
 
