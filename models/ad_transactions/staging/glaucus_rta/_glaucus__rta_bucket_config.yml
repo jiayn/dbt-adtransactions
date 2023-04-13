@@ -1,0 +1,10 @@
+
+version: 2
+
+
+sources:
+  - name: fin_dim
+    description: "存储RTA相关的所有底表数据"
+    schema: fin_dim
+    tables: 
+      - name: dim_m_audience_group_rta_group_config_daily_jwm_pdi
