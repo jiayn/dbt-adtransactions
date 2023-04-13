@@ -60,7 +60,7 @@ with ad_back as (
                  or sx_product_names='NULL'
                 then 1 else 0 end as if_jt
                 ,row_number() over (partition by p_day, p_resource_code, win_config_id, req_bucket, ldp_userno order by rand(123)) ct
-                from {{ source('ad_transactions_sources', 'ad_trans_baidu_feb_03071') }} 
+                from {{ source('dp_data_db', 'ad_trans_baidu_feb_03071') }} 
                 where p_day >= date_format(date_sub(date('{{ var("pday") }}') ,7),'yyyyMMdd')
                 and   p_day < date_format(date_add(date('{{ var("pday") }}') ,1),'yyyyMMdd')
                 and ldp_userno is not null

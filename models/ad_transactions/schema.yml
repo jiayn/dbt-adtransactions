@@ -3,7 +3,7 @@ version: 2
 
 
 sources:
-  - name: ad_transactions_sources 
+  - name: dp_data_db 
     description: "ad transactions 所依赖的所有底层数据源"
     schema: dp_data_db
     freshness: # default freshness
@@ -21,3 +21,8 @@ sources:
             description: “请求所属的媒体”
             tests:
               - not_null
+  - name: fin_dim
+    description: 
+    schma: fin_dim
+    tables: 
+      - name: dim_m_audience_group_rta_group_config_daily_jwm_pdi
