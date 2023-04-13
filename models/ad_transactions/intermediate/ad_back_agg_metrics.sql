@@ -49,20 +49,23 @@ with ad_back as (
       , sum(case when is_wj_dz_t3='true' and has_fenfa='false' and if_jt=1 then wj_dz_t3_amt else 0 end) sum_wjt3_dz_amt_nonff
 
     from (
-        select *,
-        case when sx_product_names like '%RJ%'
-         or sx_product_names like '%上海大额%'
-         or sx_product_names like '%上海小额%'
-         or sx_product_names like '%北京小额%'
-         or sx_product_names is null
-         or sx_product_names='NULL'
-        then 1 else 0 end as if_jt
-        ,row_number() over (partition by p_day, p_resource_code, win_config_id, req_bucket, ldp_userno order by rand(123)) ct
-        from {{ source('ad_transactions_sources', 'ad_trans_baidu_feb_03071') }} 
-        where p_day >= date_format(date_sub(date('{{ var("pday") }}') ,7),'yyyyMMdd')
-        and   p_day < date_format(date_add(date('{{ var("pday") }}') ,1),'yyyyMMdd')
-        and ldp_userno is not null
-        having ct = 1
+
+        select * from (
+            select *,
+                case when sx_product_names like '%RJ%'
+                 or sx_product_names like '%上海大额%'
+                 or sx_product_names like '%上海小额%'
+                 or sx_product_names like '%北京小额%'
+                 or sx_product_names is null
+                 or sx_product_names='NULL'
+                then 1 else 0 end as if_jt
+                ,row_number() over (partition by p_day, p_resource_code, win_config_id, req_bucket, ldp_userno order by rand(123)) ct
+                from {{ source('ad_transactions_sources', 'ad_trans_baidu_feb_03071') }} 
+                where p_day >= date_format(date_sub(date('{{ var("pday") }}') ,7),'yyyyMMdd')
+                and   p_day < date_format(date_add(date('{{ var("pday") }}') ,1),'yyyyMMdd')
+                and ldp_userno is not null
+            )
+        where ct = 1 
     ) temp_table
     group by 1,2,3,4
 )
