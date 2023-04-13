@@ -4,7 +4,7 @@ version: 2
 
 sources:
   - name: dp_data_db 
-    description: "ad transactions 所依赖的所有底层数据源"
+    description: "存储数据智能部生成的所有数据"
     schema: dp_data_db
     freshness: # default freshness
       warn_after: {count: 12, period: hour}
@@ -22,7 +22,7 @@ sources:
             tests:
               - not_null
   - name: fin_dim
-    description: 
+    description: "存储RTA相关的所有底表数据"
     schma: fin_dim
     tables: 
       - name: dim_m_audience_group_rta_group_config_daily_jwm_pdi
