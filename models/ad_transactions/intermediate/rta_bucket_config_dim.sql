@@ -10,9 +10,9 @@ with rta_bucket_config_dim as (
     from
         (
             select strategys_name, config_id, input_date, bucket
-            from {{ source('fin_dim', 'dim_m_audience_group_rta_group_config_daily_jwm_pdi') }}  fin_dim.dim_m_audience_group_rta_group_config_daily_jwm_pdi LATERAL VIEW EXPLODE(split(buckets, ",")) as bucket
-            where input_date >=date_sub(date('${pDate}') ,8)
-        )
+            from {{ source('fin_dim', 'dim_m_audience_group_rta_group_config_daily_jwm_pdi') }} LATERAL VIEW EXPLODE(split(buckets, ",")) as bucket
+            where input_date >=date_sub(date('{{ var("pday") }}') ,8)
+        ) temp_table
     group by 1,2,3,4
 )
 
