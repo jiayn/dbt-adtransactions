@@ -32,9 +32,7 @@ select    p_day
                   else null end as clk_device_md5--集中设备号到一个字段,计算UV
           , sum(imp_agg_ct) as imp_pv
           , sum(clk_agg_ct) as clk_pv
-    from {{ source('dp_data_db', 'ad_trans_baidu_feb_03071') }} 
-    where p_day >=date_format(date_sub(date('{{ var("pday") }}') ,7),'yyyyMMdd')
-    and   p_day < date_format(date_add(date('{{ var("pday") }}') ,1),'yyyyMMdd')
+    from {{ ref('stg_ad_transactions__details') }}
     group by 1,2,3,4,5,6
     ) ad_f
     group by 1,2,3,4
