@@ -5,7 +5,7 @@ with ad_transactions_details as (
    select * from {{ ref('stg_ad_transactions__details') }}
 
 ),
-ad_transactions_aggregated_to_configid_bucket_front as (
+adtransactions_aggregated_to_configid_bucket_front as (
   select  p_day
         , p_resource_code
         , win_config_id
@@ -30,4 +30,4 @@ ad_transactions_aggregated_to_configid_bucket_front as (
     group by 1,2,3,4
 )
 
-select * from ad_transactions_aggregated_to_configid_bucket_front
+select * from adtransactions_aggregated_to_configid_bucket_front

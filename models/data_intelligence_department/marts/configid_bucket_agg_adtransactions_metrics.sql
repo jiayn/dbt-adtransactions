@@ -1,6 +1,6 @@
 {{ config(materialized='table') }}
 
-with configid_bucket_ad_transactions_metrics as (
+with configid_bucket_agg_adtransactions_metrics as (
   select
     nvl(front.p_day,back.p_day) as p_day,
     nvl(front.p_resource_code,back.p_resource_code) as p_resource_code,
@@ -27,4 +27,4 @@ on front.win_config_id =  stgy.config_id and front.req_bucket =  stgy.bucket --a
    and from_unixtime(unix_timestamp(stgy.input_pday,'yyyyMMdd'),'yyyy-MM-dd')=date_sub(from_unixtime(unix_timestamp(front.p_day,'yyyyMMdd'),'yyyy-MM-dd'),1)
 )
 
-select * from configid_bucket_ad_transactions_metrics
+select * from configid_bucket_agg_adtransactions_metrics
