@@ -1,6 +1,14 @@
 {{ config(materialized='view') }}
 
-with ad_back as (
+with 
+
+ad_transactions_details as (
+
+   select * from {{ ref('stg_ad_transactions__details') }}
+
+),
+
+with ad_transactions_aggregated_to_configid_bucket_back as (
     select
         p_day
       , p_resource_code
@@ -49,18 +57,10 @@ with ad_back as (
       , sum(case when is_wj_dz_t3='true' and has_fenfa='false' and if_jt=1 then wj_dz_t3_amt else 0 end) sum_wjt3_dz_amt_nonff
 
     from (
-
         select * from (
-            select *,
-                case when sx_product_names like '%RJ%'
-                 or sx_product_names like '%上海大额%'
-                 or sx_product_names like '%上海小额%'
-                 or sx_product_names like '%北京小额%'
-                 or sx_product_names is null
-                 or sx_product_names='NULL'
-                then 1 else 0 end as if_jt
+            select *
                 ,row_number() over (partition by p_day, p_resource_code, win_config_id, req_bucket, ldp_userno order by rand(123)) ct
-                from {{ source('dp_data_db', 'ad_trans_baidu_feb_03071') }} 
+                from ad_transactions_details
                 where p_day >= date_format(date_sub(date('{{ var("pday") }}') ,7),'yyyyMMdd')
                 and   p_day < date_format(date_add(date('{{ var("pday") }}') ,1),'yyyyMMdd')
                 and ldp_userno is not null
@@ -70,7 +70,7 @@ with ad_back as (
     group by 1,2,3,4
 )
 
-select * from ad_back
+select * from ad_transactions_aggregated_to_configid_bucket_back
 
 
 
