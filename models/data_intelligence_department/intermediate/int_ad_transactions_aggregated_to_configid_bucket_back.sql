@@ -5,8 +5,7 @@ with ad_transactions_details as (
    select * from {{ ref('stg_ad_transactions__details') }}
 
 ),
-
-with ad_transactions_aggregated_to_configid_bucket_back as (
+ad_transactions_aggregated_to_configid_bucket_back as (
     select
         p_day
       , p_resource_code
