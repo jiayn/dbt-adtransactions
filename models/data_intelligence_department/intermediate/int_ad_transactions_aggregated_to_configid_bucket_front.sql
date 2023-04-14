@@ -21,7 +21,7 @@ select    p_day
           , p_resource_code
           , win_config_id
           , req_bucket
-          , imp_android_id
+          , imp_device_md5
           , clk_device_md5
           , sum(imp_agg_ct) as imp_pv
           , sum(clk_agg_ct) as clk_pv
