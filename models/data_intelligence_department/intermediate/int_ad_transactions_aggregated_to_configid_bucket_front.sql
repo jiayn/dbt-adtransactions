@@ -6,8 +6,7 @@ with ad_transactions_details as (
 
 ),
 ad_transactions_aggregated_to_configid_bucket_front as (
-
-select    p_day
+  select  p_day
         , p_resource_code
         , win_config_id
         , req_bucket
