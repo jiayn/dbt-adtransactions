@@ -1,8 +1,6 @@
 {{ config(materialized='view') }}
 
-with 
-
-ad_transactions_details as (
+with ad_transactions_details as (
 
    select * from {{ ref('stg_ad_transactions__details') }}
 
