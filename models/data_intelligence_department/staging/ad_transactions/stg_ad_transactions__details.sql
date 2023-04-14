@@ -2,7 +2,7 @@
 
 with source as (
 
-    select * from {{ source('dp_data_db', 'ad_trans_baidu_feb_03071') }} 
+    select * from {{ source('ad_trnasactions', 'ad_trans_baidu_feb_03071') }} 
 
 ),
 renamed as ( 

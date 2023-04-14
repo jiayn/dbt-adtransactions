@@ -2,7 +2,7 @@
 
 with source as (
 
-    select * from {{ source('fin_dim', 'dim_m_audience_group_rta_group_config_daily_jwm_pdi') }} 
+    select * from {{ source('data_ai_glaucus', 'dim_m_audience_group_rta_group_config_daily_jwm_pdi') }} 
 
 ),
 renamed as ( 

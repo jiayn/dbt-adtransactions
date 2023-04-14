@@ -1,7 +1,8 @@
 version: 2
 
 sources:
-  - name: dp_data_db
-    description: "存储数据智能部生成的所有数据"
+  - name: ad_trnasactions
+    schema: dp_data_db
+    description: "存储数据智能部生成的广告交易数据"
     tables: 
       - name: ad_trans_baidu_feb_03071
