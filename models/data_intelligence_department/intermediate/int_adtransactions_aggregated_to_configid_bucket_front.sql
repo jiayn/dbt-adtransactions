@@ -35,5 +35,3 @@ adtransactions_aggregated_to_configid_bucket_front as (
 )
 
 select * from adtransactions_aggregated_to_configid_bucket_front
-
-alter 
