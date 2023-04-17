@@ -27,9 +27,13 @@ adtransactions_aggregated_to_configid_bucket_front as (
           , sum(clk_agg_ct) as clk_pv
           , sum(imp_cpm_cost) as imp_cpm_cost
       from ad_transactions_details
+      where p_day >= date_format(date_sub(date('{{ var("pday") }}') ,7),'yyyyMMdd')
+      and   p_day < date_format(date_add(date('{{ var("pday") }}') ,1),'yyyyMMdd')
       group by 1,2,3,4,5,6
     ) ad_f
     group by 1,2,3,4
 )
 
 select * from adtransactions_aggregated_to_configid_bucket_front
+
+alter 

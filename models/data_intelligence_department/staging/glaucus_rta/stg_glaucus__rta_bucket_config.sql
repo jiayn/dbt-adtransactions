@@ -16,7 +16,6 @@ renamed as (
         (
             select strategys_name, config_id, input_date, bucket
             from source LATERAL VIEW EXPLODE(split(buckets, ",")) as bucket
-            where input_date >=date_sub(date('{{ var("pday") }}') ,8)
         )
     group by 1,2,3,4
 )
