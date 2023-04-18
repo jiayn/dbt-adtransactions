@@ -1,4 +1,9 @@
-{{ config(materialized='table') }}
+{{ config(
+  materialized='table',
+  incremental_strategy='insert_overwrite',
+  partition_by=['p_day'], 
+  file_format='orc'
+)}}
 
 with configid_bucket_agg_adtransactions_metrics as (
   select
