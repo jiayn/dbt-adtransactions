@@ -1,5 +1,5 @@
 {{ config(
-  materialized = 'incremental',
+  materialized = 'table' 
   incremental_strategy = 'insert_overwrite',
   partition_by = 'p_day',
   file_format = 'parquet'
