@@ -1,7 +1,8 @@
 {{ config(
-  materialized='incremental',
-  partition_by=['p_day'],
-  file_format='parquet'
+  materialized = 'incremental',
+  incremental_strategy = 'insert_overwrite',
+  partition_by = 'p_day',
+  file_format = 'parquet'
 )}}
 
 with configid_bucket_agg_adtransactions_metrics as (
