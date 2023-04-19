@@ -1,6 +1,7 @@
 {{ config(
   materialized='table',
-  partition_by=['p_day']
+  partition_by=['p_day'],
+  file_format='orc'
 )}}
 
 with configid_bucket_agg_adtransactions_metrics as (
