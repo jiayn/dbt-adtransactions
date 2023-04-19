@@ -1,8 +1,6 @@
 {{ config(
   materialized='table',
-  incremental_strategy='insert_overwrite',
-  partition_by=['p_day'], 
-  file_format='orc'
+  partition_by=['p_day']
 )}}
 
 with configid_bucket_agg_adtransactions_metrics as (
