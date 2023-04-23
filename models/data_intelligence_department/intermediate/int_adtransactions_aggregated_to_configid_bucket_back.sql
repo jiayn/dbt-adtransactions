@@ -54,13 +54,14 @@ ad_transactions_aggregated_to_configid_bucket_back as (
       , sum(case when is_wj_dz_t3='true' and has_fenfa='false' and if_jt=1 then wj_dz_t3_amt else 0 end) sum_wjt3_dz_amt_nonff
 
     from (
+            select * from (
             select *
             ,row_number() over (partition by p_day, p_resource_code, win_config_id, req_bucket, ldp_userno order by rand(123)) ct
             from ad_transactions_details
             where p_day >= date_format(date_sub(date('{{ var("pday") }}') ,7),'yyyyMMdd')
             and   p_day < date_format(date_add(date('{{ var("pday") }}') ,1),'yyyyMMdd')
             and ldp_userno is not null
-            having ct = 1
+            ) temp_table_1 where ct = 1
     ) temp_table_2
     group by 1,2,3,4
 )
