@@ -26,7 +26,7 @@ on
     front.win_config_id = back.win_config_id and
     front.req_bucket = back.req_bucket and
     front.p_day = back.p_day
-left join {{ ref('stg_glaucus__rta_bucket_config') }} as stgy 
+left join {{ ref('stg_glaucus__rta_bckt_accgroup_config') }} as stgy 
 on  front.win_config_id =  stgy.config_id 
     and front.req_bucket =  stgy.bucket --and front.p_day =  stgy.input_pday
     and from_unixtime(unix_timestamp(stgy.input_pday,'yyyyMMdd'),'yyyy-MM-dd')=date_sub(from_unixtime(unix_timestamp(front.p_day,'yyyyMMdd'),'yyyy-MM-dd'),1)
