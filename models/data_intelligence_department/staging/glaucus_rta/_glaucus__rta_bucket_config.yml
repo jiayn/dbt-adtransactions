@@ -8,3 +8,9 @@ sources:
     schema: fin_dim
     tables: 
       - name: dim_m_audience_group_rta_group_config_daily_jwm_pdi
+  - name: data_ai_glaucus_preagg
+    description: "存储数据智能部的预聚合数据"
+    schema: fin_dm_data_ai
+    tables: 
+      - name: dm_eco_bm_rta_req_new_config_bckt
+      - name: dm_eco_bm_rta_bucket_cfgid_cost

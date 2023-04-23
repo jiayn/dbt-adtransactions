@@ -1,11 +1,11 @@
-{{ config(materialized='view') }}
+{{ config(materialized='ephemeral') }}
 
 with ad_transactions_details as (
 
    select * from {{ ref('stg_ad_transactions__details') }}
 
 ),
-ad_transactions_aggregated_to_configid_bucket_back as (
+ephemeral_data as (
     select
         p_day
       , p_resource_code
@@ -66,7 +66,7 @@ ad_transactions_aggregated_to_configid_bucket_back as (
     group by 1,2,3,4
 )
 
-select * from ad_transactions_aggregated_to_configid_bucket_back
+select * from ephemeral_data
 
 
 
