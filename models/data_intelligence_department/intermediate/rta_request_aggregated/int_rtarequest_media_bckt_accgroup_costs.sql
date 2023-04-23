@@ -6,13 +6,13 @@ with req_media_bckt_accgroup_agg_costs as (
 rtarequest_media_bckt_accgroup_costs as (
     select date_format(req.dt,'yyyyMMdd')as pday
     , qd as media
-    , coalesce(req.bucket,'无')bucket,
+    , coalesce(req.bucket,'无')bucket
     , coalesce(req.config_id,'无')config_id
     , coalesce(cfg.strategys_name,'无')strategys_name
     from req_media_bckt_accgroup_agg_costs req left join {{ ref('stg_glaucus__rta_bckt_accgroup_config') }} cfg
         on      req.config_id = cfg.config_id 
             and req.bucket=cfg.bucket 
-            and from_unixtime(unix_timestamp(cfg.input_pday,'yyyyMMdd'),'yyyy-MM-dd')=date_sub(a.dt,1)
+            and from_unixtime(unix_timestamp(cfg.input_pday,'yyyyMMdd'),'yyyy-MM-dd')=date_sub(req.dt,1)
     where req.dt >= date_format(date_sub(date('{{ var("pday") }}') ,7),'yyyyMMdd')
         and   req.dt < date_format(date_add(date('{{ var("pday") }}') ,1),'yyyyMMdd')
 )
