@@ -1,6 +1,5 @@
 {{ config(
   materialized = 'incremental',
-  unique_key= ['p_day', 'p_resource_code', 'config_id', 'bucket'],
   partition_by = 'p_day'
 )}}
 
@@ -30,11 +29,6 @@ left join {{ ref('stg_glaucus__rta_bucket_config') }} as stgy
 on  front.win_config_id =  stgy.config_id 
     and front.req_bucket =  stgy.bucket --and front.p_day =  stgy.input_pday
     and from_unixtime(unix_timestamp(stgy.input_pday,'yyyyMMdd'),'yyyy-MM-dd')=date_sub(from_unixtime(unix_timestamp(front.p_day,'yyyyMMdd'),'yyyy-MM-dd'),1)
-{% if is_incremental() %}
-  -- this filter will only be applied on an incremental run
-  where 1=1
-{% endif %}
-
 )
 
 select * from configid_bucket_agg_adtransactions_metrics
