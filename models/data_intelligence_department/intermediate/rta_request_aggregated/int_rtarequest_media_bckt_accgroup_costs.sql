@@ -9,6 +9,7 @@ rtarequest_media_bckt_accgroup_costs as (
     , coalesce(req.bucket,'无')bucket
     , coalesce(req.config_id,'无')config_id
     , coalesce(cfg.strategys_name,'无')strategys_name
+    costs
     from req_media_bckt_accgroup_agg_costs req left join {{ ref('stg_glaucus__rta_bckt_accgroup_config') }} cfg
         on      req.config_id = cfg.config_id 
             and req.bucket=cfg.bucket 
