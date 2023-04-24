@@ -5,6 +5,7 @@ with req_media_bckt_accgroup_pvuv_agg as (
 ),
 rtarequest_media_bckt_accgroup_pvuv as (
     select date_format(req.dt,'yyyyMMdd')as pday
+    , req.media
     , coalesce(req.bucket,'无')bucket
     , coalesce(req.config_id,'无')config_id
     , coalesce(cfg.strategys_name,'无')strategys_name

@@ -73,7 +73,7 @@ from
   , bucket
   , config_id
   , strategys_name 
-  from {{ ref('int_adtransactions_aggregated_to_media_bckt_accgroup_full') }} funnel  group by 1,2,3,4,5
+  from {{ ref('int_adtransactions_aggregated_to_media_bckt_accgroup_full_stg') }} funnel  group by 1,2,3,4,5
 
   union
 
