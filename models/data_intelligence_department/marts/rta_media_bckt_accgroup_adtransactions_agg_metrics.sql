@@ -1,7 +1,7 @@
 {{ config(
   materialized = 'incremental',
   incremental_strategy = 'insert_overwrite',
-  partition_by = 'p_day'
+  partition_by = 'pday'
 )}}
 
 with incremental_table_data as (
@@ -72,7 +72,7 @@ from
   , bucket
   , config_id
   , strategys_name 
-  from {{ ref('int_adtransactions_aggregated_to_media_bckt_accgroup_full_stg') }} funnel  group by 1,2,3,4,5
+  from {{ ref('int_adtransactions_aggregated_to_media_bckt_accgroup_full_stg') }}  group by 1,2,3,4,5
 
   union
 
@@ -82,7 +82,7 @@ from
     , bucket
     , config_id
     , strategys_name 
-  from {{ ref('int_rtarequest_media_bckt_accgroup_costs') }} spend group by 1,2,3,4,5
+  from {{ ref('int_rtarequest_media_bckt_accgroup_costs') }} group by 1,2,3,4,5
 
   union
 
@@ -92,11 +92,11 @@ from
     , bucket
     , config_id
     , strategys_name 
-  from {{ ref('int_rtarequest_media_bckt_accgroup_pvuv') }} request where config_id not in ('','无') and config_id is not null group by 1,2,3,4,5
+  from {{ ref('int_rtarequest_media_bckt_accgroup_pvuv') }} where config_id not in ('','无') and config_id is not null group by 1,2,3,4,5
 ) a
-left join funnel f  on a.p_day=f.p_day and a.media=f.media and a.bucket=f.bucket and a.config_id=f.config_id and a.strategys_name=f.strategys_name
-left join spend s on a.p_day=s.p_day and a.media=s.media and a.bucket=s.bucket and a.config_id=s.config_id and a.strategys_name=s.strategys_name
-left join request r on a.p_day=r.p_day and a.media=r.media and a.bucket=r.bucket and a.config_id=r.config_id and a.strategys_name=r.strategys_name
+left join {{ ref('int_adtransactions_aggregated_to_media_bckt_accgroup_full_stg') }} f  on a.p_day=f.p_day and a.media=f.media and a.bucket=f.bucket and a.config_id=f.config_id and a.strategys_name=f.strategys_name
+left join {{ ref('int_rtarequest_media_bckt_accgroup_costs') }} s on a.p_day=s.p_day and a.media=s.media and a.bucket=s.bucket and a.config_id=s.config_id and a.strategys_name=s.strategys_name
+left join {{ ref('int_rtarequest_media_bckt_accgroup_pvuv') }} r on a.p_day=r.p_day and a.media=r.media and a.bucket=r.bucket and a.config_id=r.config_id and a.strategys_name=r.strategys_name
 
 )
 
