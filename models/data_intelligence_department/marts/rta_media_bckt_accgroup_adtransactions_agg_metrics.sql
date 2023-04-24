@@ -64,7 +64,6 @@ select
     , coalesce(sum_wjt3_dz_amt,0) sum_wjt3_dz_amt
     , coalesce(sum_wjt3_dz_amt_nonff,0) sum_wjt3_dz_amt_nonff
     , coalesce(imp_cpm_cost,0) imp_cpm_cost
-    , a.pday
 from
 (
   select 

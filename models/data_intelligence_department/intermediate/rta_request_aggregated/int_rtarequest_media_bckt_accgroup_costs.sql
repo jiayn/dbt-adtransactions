@@ -4,7 +4,7 @@ with req_media_bckt_accgroup_agg_costs as (
     select * from {{ source('data_ai_glaucus_preagg', 'dm_eco_bm_rta_bucket_cfgid_cost') }} 
 ),
 rtarequest_media_bckt_accgroup_costs as (
-    select date_format(req.dt,'yyyyMMdd')as pday
+    select date_format(req.dt,'yyyyMMdd')as p_day
     , qd as media
     , coalesce(req.bucket,'无')bucket
     , coalesce(req.config_id,'无')config_id

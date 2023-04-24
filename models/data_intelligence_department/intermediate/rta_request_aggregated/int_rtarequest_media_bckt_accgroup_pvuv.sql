@@ -4,7 +4,7 @@ with req_media_bckt_accgroup_pvuv_agg as (
    select * from {{ ref('stg_glaucus__rta_req_media_bckt_accgroup_pvuv_agg') }}
 ),
 rtarequest_media_bckt_accgroup_pvuv as (
-    select date_format(req.dt,'yyyyMMdd')as pday
+    select date_format(req.dt,'yyyyMMdd')as p_day
     , req.media
     , coalesce(req.bucket,'无')bucket
     , coalesce(req.config_id,'无')config_id
