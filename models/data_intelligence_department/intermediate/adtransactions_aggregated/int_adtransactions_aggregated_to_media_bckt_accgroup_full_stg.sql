@@ -2,7 +2,7 @@
 
 with renamed as (
   select
-    p_day as pday
+    p_day
     , case when p_resource_code='tt_rta' and config_id in ('42','13') then '穿山甲'----'10785' 20220624去掉 ,对应configid 63
            when p_resource_code='tt_rta' and(config_id not in ('42','13')or config_id is null) then '头条' ----'10785' 20220624去掉 ,对应configid 63
            when p_resource_code='ks_rta' then '快手'
